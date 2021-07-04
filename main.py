@@ -9,10 +9,16 @@ def make_image(rule, mode="simple", p=0.5):
     color2 = (0xff, 0x99, 0x99)  # 1の色
     color2 = (0, 0, 0)  # 0の色
     color1 = (0xff, 0xff, 0xff)  # 1の色
-    x = 1920
-    y = 1080  # 出力画像サイズ　今はフルHDの画像を出力します
+    colors = [
+        (0xff, 0xff, 0xff),
+        (0xaa, 0xaa, 0xaa),
+        (0x55, 0x55, 0x55),
+        (0x00, 0x00, 0x00),
+    ]
+    x = 1800
+    y = 1000  # 出力画像サイズ　今はフルHDの画像を出力します
     dotsize = 2  # 一つのセルがドットいくつ分か
-    drawsize = 3
+    drawsize = 2
     filename = "rule"+str(rule)+"_"+str(x)+"x"+str(y) + \
         "_"+str(dotsize)+"_"+mode+".png"
     img = Image.new('RGB', (x, y), color1)
@@ -28,10 +34,19 @@ def make_image(rule, mode="simple", p=0.5):
     ny = y//dotsize + 1
     cell_map = [[0 for i in range(ny)] for j in range(nx+2)]
     if mode == "simple":
-        cell_map[nx//(2)][0] = 1
+        for i in range(int(p)):
+            cell_map[nx//(2)+i][0] = 1
     elif mode == "random":
         for i in range(nx):
             cell_map[i][0] = 1 if random.random() < p else 0
+    elif mode == "sense":
+        for i in range(nx):
+            if random.random() < p:
+                cell_map[i][0] = 1
+                i += 1
+                while random.random() < 0.3 and i < nx:
+                    cell_map[i][0] = 1
+                    i += 1
 
     cell_map[nx][0] = cell_map[0][0]
     cell_map[nx+1][0] = cell_map[1][0]
@@ -58,10 +73,11 @@ def make_image(rule, mode="simple", p=0.5):
 
     for i in range(x):
         for j in range(y):
+            colorID = min(len(colors)-1, pixelMap[i][j])
             if pixelMap[i][j] > 0:
-                img.putpixel((i, j), color2)
+                img.putpixel((i, j), colors[3])
 
-    # img.save(filename)
+    img.save(filename)
     return img
 
 
