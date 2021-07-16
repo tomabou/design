@@ -16,9 +16,11 @@ def make_image(rule, mode="simple", p=0.5):
         (0x00, 0x00, 0x00),
     ]
     x = 1800
-    y = 1000  # 出力画像サイズ　今はフルHDの画像を出力します
-    dotsize = 2  # 一つのセルがドットいくつ分か
-    drawsize = 2
+    y = 2500  # 出力画像サイズ　今はフルHDの画像を出力します
+    x = 2518
+    y = 2991  # 出力画像サイズ　今はフルHDの画像を出力します
+    dotsize = 7  # 一つのセルがドットいくつ分か
+    drawsize = 7
     filename = "rule"+str(rule)+"_"+str(x)+"x"+str(y) + \
         "_"+str(dotsize)+"_"+mode+".png"
     img = Image.new('RGB', (x, y), color1)
