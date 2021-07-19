@@ -53,12 +53,14 @@ def make_image(rule, mode="simple", p=0.5):
     y_range = 17.0
     circle_size: int = 5
     dt = 0.01
+    N = 10**7
     filename = "rule"+str(rule)+"_"+str(x_size)+"x"+str(y_size) + \
         "_"+mode+".png"
     img: Image = Image.new('RGB', (x_size, y_size), color1)
     draw = ImageDraw.Draw(img)
 
-    data = run_scheme(100000, dt)
+    data = run_scheme(int(N*dt), dt)
+    data = data[10:]
     for (a, b) in data:
         circle_center_x = (a-x_center) * x_size / x_range
         circle_center_y = (b-y_center) * y_size / y_range
