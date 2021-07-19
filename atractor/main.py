@@ -1,5 +1,4 @@
 from PIL import Image, ImageDraw
-import sys
 import math
 from typing import Tuple, List
 from numba import jit
@@ -42,7 +41,7 @@ def run_scheme(T, dt) -> List[Tuple[float, float]]:
     return ret
 
 
-def make_image(rule, mode="simple", p=0.5):
+def make_image():
     color1 = (20, 20, 20)  # 0の色
     color2 = (255, 255, 255)  # 1の色
     x_size = 2518
@@ -54,8 +53,8 @@ def make_image(rule, mode="simple", p=0.5):
     circle_size: int = 5
     dt = 0.01
     N = 10**7
-    filename = "rule"+str(rule)+"_"+str(x_size)+"x"+str(y_size) + \
-        "_"+mode+".png"
+    filename = str(x_size)+"x"+str(y_size) + \
+        ".png"
     img: Image = Image.new('RGB', (x_size, y_size), color1)
     draw = ImageDraw.Draw(img)
 
@@ -77,20 +76,5 @@ def make_image(rule, mode="simple", p=0.5):
 
 
 if __name__ == "__main__":
-    argv = sys.argv
-    if len(argv) == 1:
-        rule = 30
-    else:
-        rule = int(argv[1])
-    if len(argv) <= 2:
-        mode = "simple"
-    else:
-        mode = argv[2]
-
-    if len(argv) > 3:
-        p = float(argv[3])
-    else:
-        p = 0.5
-
-    img = make_image(rule, mode, p)
+    img = make_image()
     img.show()
