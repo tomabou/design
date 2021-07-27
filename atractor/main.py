@@ -43,19 +43,21 @@ def run_scheme(T, dt) -> List[Tuple[float, float]]:
 
 def make_image():
     color1 = (20, 20, 20)  # 0の色
-    color2 = (255, 255, 255)  # 1の色
-    x_size = 2518
-    y_size = 2991
+    color1 = (255, 255, 255, 0)  # 1の色
+    color2 = (255, 255, 255, 255)
+    color2 = (0, 0, 0, 255)
+    x_size = int(2518 * 1.1)
+    y_size = int(2991 * 1.1)
     x_center = 3.0
     y_center = 0.0
     x_range = 2.0
     y_range = 17.0
     circle_size: int = 5
     dt = 0.01
-    N = 10**7
+    N = 10**7 * 2
     filename = str(x_size)+"x"+str(y_size) + \
         ".png"
-    img: Image = Image.new('RGB', (x_size, y_size), color1)
+    img: Image = Image.new('RGBA', (x_size, y_size), color1)
     draw = ImageDraw.Draw(img)
 
     data = run_scheme(int(N*dt), dt)
